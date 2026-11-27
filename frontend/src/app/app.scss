@@ -3,16 +3,38 @@
   padding: 0 1rem 3rem;
 }
 
-header {
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
   max-width: 34rem;
   margin: 0 auto;
   padding: 3rem 0 1.5rem;
 
   h1 {
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--accent);
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--text);
   }
+}
+
+.app-header__mark {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.app-header__subtitle {
+  margin-top: 0.125rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
 }
