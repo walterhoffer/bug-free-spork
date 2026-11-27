@@ -1,0 +1,37 @@
+<section class="todos">
+  <h2>Zadania</h2>
+
+  <form (submit)="$event.preventDefault(); add()">
+    <input
+      type="text"
+      placeholder="Nowe zadanie…"
+      [value]="newTitle()"
+      (input)="newTitle.set($any($event.target).value)"
+    />
+    <button type="submit">Dodaj</button>
+  </form>
+
+  <nav class="filters">
+    @for (f of filters; track f) {
+      <button type="button" [class.active]="store.filter() === f" (click)="store.setFilter(f)">
+        {{ f }}
+      </button>
+    }
+  </nav>
+
+  <ul>
+    @for (todo of store.visibleTodos(); track todo.id) {
+      <li [class.done]="todo.done">
+        <label>
+          <input type="checkbox" [checked]="todo.done" (change)="store.toggle(todo.id)" />
+          {{ todo.title }}
+        </label>
+        <button type="button" (click)="store.remove(todo.id)" aria-label="Usuń">✕</button>
+      </li>
+    } @empty {
+      <li class="empty">Brak zadań</li>
+    }
+  </ul>
+
+  <p class="summary">Pozostało: {{ store.remainingCount() }}</p>
+</section>

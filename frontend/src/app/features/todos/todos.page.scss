@@ -1,0 +1,43 @@
+.todos {
+  max-width: 32rem;
+  margin: 2rem auto;
+}
+
+form {
+  display: flex;
+  gap: 0.5rem;
+
+  input {
+    flex: 1;
+  }
+}
+
+.filters {
+  display: flex;
+  gap: 0.25rem;
+  margin: 1rem 0;
+
+  .active {
+    font-weight: bold;
+  }
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.25rem 0;
+
+  &.done label {
+    text-decoration: line-through;
+    opacity: 0.6;
+  }
+
+  &.empty {
+    opacity: 0.6;
+  }
+}
