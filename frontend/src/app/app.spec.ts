@@ -15,10 +15,12 @@ describe('App', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should render title', async () => {
+  it('should render the app header', async () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, frontend');
+    expect(compiled.querySelector('header h1')?.textContent).toContain('Lista zadań');
+    expect(compiled.querySelector('.app-header__subtitle')?.textContent?.trim()).toBeTruthy();
+    expect(compiled.textContent).not.toContain('Hello');
   });
 });
