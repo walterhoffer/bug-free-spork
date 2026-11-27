@@ -2,16 +2,19 @@
   <h2>Zadania</h2>
 
   <form (submit)="$event.preventDefault(); add()">
+    <label class="visually-hidden" for="new-todo">Nowe zadanie</label>
     <input
+      id="new-todo"
       type="text"
       placeholder="Nowe zadanie…"
+      autocomplete="off"
       [value]="newTitle()"
       (input)="newTitle.set($any($event.target).value)"
     />
-    <button type="submit">Dodaj</button>
+    <button type="submit" [disabled]="!canAdd()">Dodaj</button>
   </form>
 
-  <nav class="filters">
+  <nav class="filters" aria-label="Filtr zadań">
     @for (f of filters; track f.value) {
       <button
         type="button"
@@ -24,19 +27,52 @@
     }
   </nav>
 
-  <ul>
-    @for (todo of store.visibleTodos(); track todo.id) {
-      <li [class.done]="todo.done">
-        <label>
-          <input type="checkbox" [checked]="todo.done" (change)="store.toggle(todo.id)" />
-          {{ todo.title }}
-        </label>
-        <button type="button" (click)="store.remove(todo.id)" aria-label="Usuń">✕</button>
-      </li>
-    } @empty {
-      <li class="empty">Brak zadań</li>
-    }
-  </ul>
+  @if (store.visibleTodos().length) {
+    <ul>
+      @for (todo of store.visibleTodos(); track todo.id) {
+        <li [class.done]="todo.done">
+          <label>
+            <input type="checkbox" [checked]="todo.done" (change)="store.toggle(todo.id)" />
+            <span class="title">{{ todo.title }}</span>
+          </label>
+          <button
+            type="button"
+            class="remove"
+            [attr.aria-label]="'Usuń: ' + todo.title"
+            (click)="store.remove(todo.id)"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false">
+              <path d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          </button>
+        </li>
+      }
+    </ul>
+  } @else {
+    <div class="empty" role="status">
+      @if (store.counts().all === 0) {
+        <span class="empty__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+            <rect x="5" y="4" width="14" height="17" rx="2" />
+            <path d="M9 4V3h6v1M9 10h6M9 14h6M9 18h3" />
+          </svg>
+        </span>
+        <h3 class="empty__title">Brak zadań</h3>
+        <p class="empty__hint">Dodaj pierwsze zadanie powyżej.</p>
+      } @else {
+        <span class="empty__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+            <circle cx="11" cy="11" r="6" />
+            <path d="M20 20l-4.5-4.5" />
+          </svg>
+        </span>
+        <h3 class="empty__title">Nic tu nie ma</h3>
+        <p class="empty__hint">Żadne zadanie nie pasuje do tego filtra.</p>
+      }
+    </div>
+  }
 
-  <p class="summary">Pozostało: {{ store.remainingCount() }}</p>
+  @if (store.counts().all > 0) {
+    <p class="summary">{{ summary() }}</p>
+  }
 </section>
