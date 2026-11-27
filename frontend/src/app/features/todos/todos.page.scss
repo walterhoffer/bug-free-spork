@@ -1,6 +1,16 @@
 .todos {
-  max-width: 32rem;
-  margin: 2rem auto;
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: 1.75rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+
+  h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1.25rem;
+  }
 }
 
 form {
@@ -9,35 +19,122 @@ form {
 
   input {
     flex: 1;
+    min-width: 0;
   }
 }
 
+/* Segmented control */
 .filters {
-  display: flex;
-  gap: 0.25rem;
-  margin: 1rem 0;
+  display: inline-flex;
+  gap: 2px;
+  margin: 1.25rem 0 0.75rem;
+  padding: 3px;
+  background: var(--surface-muted);
+  border-radius: 10px;
 
-  .active {
-    font-weight: bold;
+  button {
+    padding: 0.35rem 0.9rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: capitalize;
+    color: var(--text-muted);
+    background: transparent;
+    border-radius: 7px;
+
+    &:hover {
+      color: var(--text);
+    }
+
+    &.active {
+      color: var(--text);
+      background: var(--surface);
+      box-shadow: var(--shadow-sm), 0 0 0 1px var(--border);
+    }
   }
 }
 
 ul {
   list-style: none;
+  margin: 0;
   padding: 0;
 }
 
 li {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  padding: 0.25rem 0;
+  gap: 0.75rem;
+  padding: 0.7rem 0.6rem;
+  margin: 0 -0.6rem;
+  border-radius: var(--radius-sm);
+  transition: background-color 0.15s var(--ease);
+
+  & + & {
+    box-shadow: 0 -1px 0 var(--border);
+  }
+
+  &:hover {
+    background: var(--surface-muted);
+
+    button {
+      opacity: 1;
+    }
+  }
+
+  label {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    transition: color 0.15s var(--ease);
+  }
 
   &.done label {
+    color: var(--text-muted);
     text-decoration: line-through;
-    opacity: 0.6;
+    text-decoration-color: rgb(107 113 137 / 0.5);
+  }
+
+  button {
+    width: 1.9rem;
+    height: 1.9rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    background: transparent;
+    opacity: 0;
+
+    &:hover {
+      color: var(--danger);
+      background: var(--danger-soft);
+    }
+
+    &:focus-visible {
+      opacity: 1;
+    }
   }
 
   &.empty {
-    opacity: 0.6;
+    justify-content: center;
+    padding: 2.5rem 0;
+    color: var(--text-muted);
+
+    &:hover {
+      background: none;
+    }
+  }
+}
+
+.summary {
+  margin: 1rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+@media (hover: none) {
+  li button {
+    opacity: 1;
   }
 }
