@@ -33,6 +33,10 @@ export const TodosStore = signalStore(
           return todos();
       }
     }),
+    counts: computed<Record<TodoFilter, number>>(() => {
+      const done = todos().filter((t) => t.done).length;
+      return { all: todos().length, active: todos().length - done, done };
+    }),
     remainingCount: computed(() => todos().filter((t) => !t.done).length),
   })),
   withMethods((store) => ({

@@ -12,9 +12,14 @@
   </form>
 
   <nav class="filters">
-    @for (f of filters; track f) {
-      <button type="button" [class.active]="store.filter() === f" (click)="store.setFilter(f)">
-        {{ f }}
+    @for (f of filters; track f.value) {
+      <button
+        type="button"
+        [class.active]="store.filter() === f.value"
+        [attr.aria-pressed]="store.filter() === f.value"
+        (click)="store.setFilter(f.value)"
+      >
+        {{ f.label }} ({{ store.counts()[f.value] }})
       </button>
     }
   </nav>
